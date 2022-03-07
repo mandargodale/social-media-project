@@ -5,9 +5,10 @@
         </title>
         <!-- path relative to directory in express.static() -->
         <link rel="stylesheet" href="/css/layout.css">
+        <%- style %>
     </head>
     <body>
-
+        
         <%# _header.ejs will be inserted here %>
         <%- include('_header'); -%>
         
@@ -17,5 +18,7 @@
         
         <%# _footer.ejs will be inserted here %>
         <%- include('_footer'); -%>
+        
+        <%- script %>
     </body>
 </html>

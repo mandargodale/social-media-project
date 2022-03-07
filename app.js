@@ -11,6 +11,10 @@ app.use(express.static('./public'))
 
 //this needs to be called before routing since views at given route can be using the layout
 app.use(expressLayouts)
+//this will put css and js files in layout at specified position in layout.ejs i.e. at <%- style %> and <%- script %>
+//without this, css and js will be in between <body>
+app.set('layout extractStyles', true)
+app.set('layout extractScripts', true)
 
 //set up the view engine
 app.set('view engine', 'ejs')
