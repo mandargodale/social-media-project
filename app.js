@@ -4,6 +4,10 @@ const port = require('./config/server-config')
 
 const app = express()
 
+//set up the view engine
+app.set('view engine', 'ejs')
+app.set('view', './views')
+
 app.use('/', router)
 
 app.listen(port, () => console.log(`Server running on port ${port}...`))
