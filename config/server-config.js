@@ -1,3 +1,3 @@
-const PORT = 8000
+const port = 8000
 
-module.exports = PORT
+module.exports = port
