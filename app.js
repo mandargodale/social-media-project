@@ -6,7 +6,7 @@ const app = express()
 
 //set up the view engine
 app.set('view engine', 'ejs')
-app.set('view', './views')
+app.set('views', './views')
 
 app.use('/', router)
 
