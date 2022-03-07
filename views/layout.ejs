@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>
+            <%= title %>
+        </title>
+    </head>
+    <body>
+
+        <%# _header.ejs will be inserted here %>
+        <%- include('_header'); -%>
+        
+        <%# variable part will be inserted here %>
+        <%# body is inbuilt variable %>
+        <%- body %>
+        
+        <%# _footer.ejs will be inserted here %>
+        <%- include('_footer'); -%>
+    </body>
+</html>
