@@ -5,6 +5,10 @@ const expressLayouts = require('express-ejs-layouts')
 
 const app = express()
 
+//for serving static files
+//this should be done before layout is created since layout can be using css, js, images etc from public
+app.use(express.static('./public'))
+
 //this needs to be called before routing since views at given route can be using the layout
 app.use(expressLayouts)
 
