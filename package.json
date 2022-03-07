@@ -1,0 +1,23 @@
+{
+  "name": "social-media-project",
+  "version": "1.0.0",
+  "description": "Social Media Project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mandargodale/social-media-project.git"
+  },
+  "author": "mandargodale",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mandargodale/social-media-project/issues"
+  },
+  "homepage": "https://github.com/mandargodale/social-media-project#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
