@@ -8,6 +8,7 @@ const app = express()
 app.set('view engine', 'ejs')
 app.set('views', './views')
 
+//set up the router
 app.use('/', router)
 
 app.listen(port, () => console.log(`Server running on port ${port}...`))

@@ -4,6 +4,7 @@ const userRouter = require('./user-router')
 
 const router = express.Router()
 
+//all root routes will be handled here
 router.get('/', homeController)
 router.use('/user', userRouter)
 
