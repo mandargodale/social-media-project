@@ -2,6 +2,7 @@ const express = require('express')
 const router = require('./routes/router')
 const port = require('./config/server-config')
 const expressLayouts = require('express-ejs-layouts')
+const connectToDb = require('./config/db-connection')
 
 const app = express()
 
@@ -23,4 +24,16 @@ app.set('views', './views')
 //set up the router
 app.use('/', router)
 
-app.listen(port, () => console.log(`Server running on port ${port}...`))
+//app.listen(port, () => console.log(`Server running on port ${port}...`))
+
+const mongoUrl = 'mongodb+srv://mandartodoappuser:mandartodoapppass@todoapp.jz7vz.mongodb.net/smpDB?retryWrites=true&w=majority'
+const startServer = async () => {
+    try {
+        await connectToDb(mongoUrl)
+        app.listen(port, () => console.log(`Connected to MongoDB and server is running on port ${port}`))
+    } catch(err) {
+        console.log(err)
+    }
+}
+
+startServer()
