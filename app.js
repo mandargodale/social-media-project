@@ -3,8 +3,11 @@ const router = require('./routes/router')
 const port = require('./config/server-config')
 const expressLayouts = require('express-ejs-layouts')
 const connectToDb = require('./config/db-connection')
+const cookieParser = require('cookie-parser')
 
 const app = express()
+
+app.use(cookieParser())
 
 //for serving static files
 //this should be done before layout is created since layout can be using css, js, images etc from public
@@ -12,6 +15,7 @@ app.use(express.static('./public'))
 
 //this needs to be called before routing since views at given route can be using the layout
 app.use(expressLayouts)
+
 //this will put css and js files in layout at specified position in layout.ejs i.e. at <%- style %> and <%- script %>
 //without this, css and js will be in between <body>
 app.set('layout extractStyles', true)
