@@ -7,10 +7,12 @@ const cookieParser = require('cookie-parser')
 
 const app = express()
 
-//to parse form data, this will create body object inside req and store parsed data in it
+//this will parse form data
+//this will create body object inside req and store parsed data in it
 app.use(express.urlencoded({extended: false}))
 
-//to parse cookies, this will create cookies object inside req and store parsed data in it
+//this will parse cookies
+//this will create cookies object inside req and store parsed data in it
 app.use(cookieParser())
 
 //for serving static files

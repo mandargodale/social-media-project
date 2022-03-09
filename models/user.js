@@ -18,6 +18,9 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 })
 
+//this will create a collection of name given to mongoose.model() as first argument
+//collection name will be in plural
+//this will create users collection
 const User = mongoose.model('User', userSchema)
 
 module.exports = User
