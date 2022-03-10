@@ -4,6 +4,9 @@ const port = require('./config/server-config')
 const expressLayouts = require('express-ejs-layouts')
 const connectToDb = require('./config/db-connection')
 const cookieParser = require('cookie-parser')
+const session = require('express-session')
+const passport = require('passport')
+const passportLocal = require('./config/passport-local-strategy')
 
 const app = express()
 
@@ -30,6 +33,22 @@ app.set('layout extractScripts', true)
 //set up the view engine
 app.set('view engine', 'ejs')
 app.set('views', './views')
+
+//this middleware will create session cookie
+//it also encrypts the cookie
+app.use(session({
+    name: 'spm',
+    secret: ' ',
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+        maxAge: 3600000  //60 minutes
+    }
+}))
+
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(passport.setAuthenticatedUser)
 
 //set up the router
 app.use('/', router)
