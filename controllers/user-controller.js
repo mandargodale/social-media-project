@@ -69,3 +69,11 @@ module.exports.createSession = (req, res) => {
     console.log('session created, redirecting to home')
     return res.redirect('/')
 }
+
+//get sign out
+module.exports.destroySession = (req, res) => {
+    console.log('session destroyed, redirecting to home')
+    //passport has added logout() in req
+    req.logout()
+    return res.redirect('/')
+}
