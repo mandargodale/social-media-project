@@ -59,6 +59,8 @@ passport.setAuthenticatedUser = (req, res, next) => {
         //creating user property in res.locals and assigning req.user to it
         res.locals.user = req.user
     }
+    //this will call next function or middleware
+    //next function will be nothing but controller
     next()
 }
 

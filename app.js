@@ -7,6 +7,11 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const passport = require('passport')
 const passportLocal = require('./config/passport-local-strategy')
+//if we restart server, our cookie was getting expired even though maxAge time is not passed
+//to avoid this problem, we can use connect-mongo package
+const MongoStore = require('connect-mongo')
+
+const mongoUrl = 'mongodb+srv://mandartodoappuser:mandartodoapppass@todoapp.jz7vz.mongodb.net/smpDB?retryWrites=true&w=majority'
 
 const app = express()
 
@@ -38,16 +43,19 @@ app.set('views', './views')
 //it also encrypts the cookie
 app.use(session({
     name: 'spm',
-    secret: ' ',
+    secret: 'something',
     saveUninitialized: false,
     resave: false,
     cookie: {
         maxAge: 3600000  //60 minutes
-    }
+    },
+    //creating new MongoStore and assigning it to store key in session
+    store: MongoStore.create({ mongoUrl: mongoUrl, autoRemove: 'disabled' })
 }))
 
 app.use(passport.initialize())
 app.use(passport.session())
+//this middleware will be called for every route, it will set req.uesr to res.locals.user
 app.use(passport.setAuthenticatedUser)
 
 //set up the router
@@ -55,7 +63,6 @@ app.use('/', router)
 
 //app.listen(port, () => console.log(`Server running on port ${port}...`))
 
-const mongoUrl = 'mongodb+srv://mandartodoappuser:mandartodoapppass@todoapp.jz7vz.mongodb.net/smpDB?retryWrites=true&w=majority'
 const startServer = async () => {
     try {
         await connectToDb(mongoUrl)
