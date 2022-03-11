@@ -14,9 +14,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-}, {
-    timestamps: true
-})
+}, {timestamps: true})
 
 //this will create a collection of name given to mongoose.model() as first argument
 //collection name will be in plural

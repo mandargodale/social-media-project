@@ -29,7 +29,7 @@ app.use(cookieParser())
 app.use(sassMiddleware({
     src: './public/scss',
     dest: './public/css',
-    debug: true,
+    //debug: true,
     outputStyle: 'expanded',
     prefix: '/css'
 }))
