@@ -10,6 +10,7 @@ const passportLocal = require('./config/passport-local-strategy')
 //if we restart server, our cookie was getting expired even though maxAge time is not passed
 //to avoid this problem, we can use connect-mongo package
 const MongoStore = require('connect-mongo')
+const sassMiddleware = require('node-sass-middleware')
 
 const mongoUrl = 'mongodb+srv://mandartodoappuser:mandartodoapppass@todoapp.jz7vz.mongodb.net/smpDB?retryWrites=true&w=majority'
 
@@ -22,6 +23,16 @@ app.use(express.urlencoded({extended: false}))
 //this will parse cookies
 //this will create cookies object inside req and store parsed data in it
 app.use(cookieParser())
+
+//currently our scss converts into css for every request and then the css is sent to browser
+//this should be optimized to convert all scss into css at once and then send it to browser
+app.use(sassMiddleware({
+    src: './public/scss',
+    dest: './public/css',
+    debug: true,
+    outputStyle: 'expanded',
+    prefix: '/css'
+}))
 
 //for serving static files
 //this should be done before layout is created since layout can be using css, js, images etc from public

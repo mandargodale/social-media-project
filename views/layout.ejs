@@ -5,6 +5,8 @@
         </title>
         <!-- path relative to directory in express.static() -->
         <link rel="stylesheet" href="/css/layout.css">
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/footer.css">
         <%- style %>
     </head>
     <body>
@@ -14,7 +16,9 @@
         
         <%# variable part will be inserted here %>
         <%# body is inbuilt variable %>
-        <%- body %>
+        <main id="layout-main">
+            <%- body %>
+        </main>
         
         <%# _footer.ejs will be inserted here %>
         <%- include('_footer'); -%>
