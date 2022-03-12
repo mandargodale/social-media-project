@@ -7,5 +7,6 @@ const router = express.Router()
 
 //checking if user is signed in before creating post
 router.post('/create', passport.checkAuthentication, commentController.create)
+router.get('/destroy/:id', passport.checkAuthentication, commentController.destroy)
 
 module.exports = router
