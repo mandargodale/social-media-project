@@ -2,9 +2,14 @@
 <h1>
     profile.ejs
 </h1>
-<h2>
-    <%= profileUser.name %>
-</h2>
-<h2>
-    <%= profileUser.email %>
-</h2>
+<!-- if user matches, show profile update form, else show profile info of selected user -->
+<% if(user.id === profileUser.id) { %>
+    <form action="/user/update-profile/<%= profileUser.id %>" method="post">
+        <input type="text" name="name" placeholder="New name" value="<%= profileUser.name %>" required>
+        <input type="email" name="email" placeholder="New email" value="<%= profileUser.email %>" required>
+        <button>Submit</button>
+    </form>
+<% } else {%>
+    <p><%= profileUser.name %></p>
+    <p><%= profileUser.email %></p>
+<% } %>

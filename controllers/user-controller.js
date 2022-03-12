@@ -80,3 +80,24 @@ module.exports.destroySession = (req, res) => {
     req.logout()
     return res.redirect('/')
 }
+
+module.exports.update = (req, res) => {
+    const {name, email} = req.body
+    const {id} = req.params
+    //checking if logged in user id and user id from params is matching
+    if(req.user.id === id) {
+        User.findByIdAndUpdate(id, {name, email}, (err, updatedUser) => {
+            if(err) {
+                console.log('error in updating user')
+                return res.redirect('back')
+            }
+            console.log('user updated successfully')
+            return res.redirect('back')
+        })
+    } else {
+        console.log('invalid user in update()')
+        res.status(401).redirect('Unauthorized')
+
+    }
+    console.log(name, email, id)
+}
