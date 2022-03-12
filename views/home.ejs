@@ -4,10 +4,13 @@
 </h1>
 <section id="feed-post">
     <h2>Posts</h2>
-    <form action="/post/create" id="create-post-form" method="post">
-        <textarea name="content" id="post-content" cols="30" rows="3" placeholder="Type here..."></textarea>
-        <button>Post</button>
-    </form>
+    <!-- displaying post form only if user is logged in -->
+    <% if(locals.user) { %>
+        <form action="/post/create" id="create-post-form" method="post">
+            <textarea name="content" id="post-content" cols="30" rows="3" placeholder="Type here..."></textarea>
+            <button>Post</button>
+        </form>
+    <% } %>
     <div id="post-list-container">
         <ul>
             <%for(post of posts) { %>
