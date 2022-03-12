@@ -1,29 +1,28 @@
 <link rel="stylesheet" href="/css/home.css">
-<h1>
-    home.ejs
-</h1>
-<section id="feed-post">
-    <h2>Posts</h2>
-    <!-- displaying post form only if user is logged in -->
-    <% if(locals.user) { %>
-        <form action="/post/create" id="create-post-form" method="post">
-            <textarea name="content" id="post-content" cols="30" rows="3" placeholder="Type here..." required></textarea>
-            <button>Post</button>
-        </form>
-    <% } %>
-    <div id="post-list-container">
-        <ul>
-            <% for(post of posts) { %>
-                <%- include('_post') %>
-            <% } %>
-        </ul>
-    </div>
-</section>
-<section id="user-friends">
-    <h2>Friends</h2>
-    <% for(user of allUsers) { %>
-        <p>
-            <a href="/user/profile/<%= user.id %>"><%= user.name %></a>
-        </p>
-    <% } %>
-</section>
+<div id="home-container">
+    <section id="feed-posts">
+        <h2>Posts</h2>
+        <!-- displaying post form only if user is logged in -->
+        <% if(locals.user) { %>
+            <form action="/post/create" id="create-post-form" method="post">
+                <textarea name="content" id="post-content" cols="30" rows="3" placeholder="Type here..." required></textarea>
+                <button>Post</button>
+            </form>
+        <% } %>
+        <div id="post-list-container">
+            <ul>
+                <% for(post of posts) { %>
+                    <%- include('_post') %>
+                <% } %>
+            </ul>
+        </div>
+    </section>
+    <section id="user-friends">
+        <h2>Friends</h2>
+        <% for(user of allUsers) { %>
+            <p>
+                <a href="/user/profile/<%= user.id %>"><%= user.name %></a>
+            </p>
+        <% } %>
+    </section>
+</div>
