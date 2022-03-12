@@ -23,6 +23,7 @@ module.exports.create = (req, res) => {
                     console.log('error in creating comment')
                     return
                 }
+                //if comment is created successfully, update comments array in post with comment id
                 post.comments.push(comment)
                 post.save()
                 res.redirect('/')
