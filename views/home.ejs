@@ -7,13 +7,13 @@
     <!-- displaying post form only if user is logged in -->
     <% if(locals.user) { %>
         <form action="/post/create" id="create-post-form" method="post">
-            <textarea name="content" id="post-content" cols="30" rows="3" placeholder="Type here..."></textarea>
+            <textarea name="content" id="post-content" cols="30" rows="3" placeholder="Type here..." required></textarea>
             <button>Post</button>
         </form>
     <% } %>
     <div id="post-list-container">
         <ul>
-            <%for(post of posts) { %>
+            <% for(post of posts) { %>
                 <li>
                     <p>
                         <%= post.content %>
@@ -22,8 +22,30 @@
                             <%= post.user.name %>
                         </small>
                     </p>
+                    <div id="post-comment">
+                        <% if(locals.user) { %>
+                            <form action="/comment/create" method="post">
+                                <input type="text" name="content" placeholder="Add comment..." required>
+                                <input type="hidden" name="postId" value="<%= post._id %>">
+                                <button>Add comment</button>
+                            </form>
+                        <% } %>
+                        <div id="post-comment-list">
+                            <ul id="post-comments-<%= post._id %>">
+                                <% for(comment of post.comments) { %>
+                                    <p>
+                                        <%= comment.content %>
+                                        <br>
+                                        <small>
+                                            <%= comment.user.name %>
+                                        </small>
+                                    </p>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
                 </li>
-            <%}%>
+            <% } %>
         </ul>
     </div>
 </section>
