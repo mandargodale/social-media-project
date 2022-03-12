@@ -3,9 +3,12 @@ const passport = require('passport')
 
 
 //render profile page
-module.exports.profile = (req, res, next) => {
-    const {user} = req
-    return res.render('profile.ejs', {title: 'Profile', user})
+module.exports.profile = (req, res) => {
+    //getting id from params, finding the user and passing it to locals
+    const {id} = req.params
+    User.findById(id, (err, user) => {
+        return res.render('profile.ejs', {title: 'Profile', profileUser: user})
+    })
 }
 
 //render sign up page

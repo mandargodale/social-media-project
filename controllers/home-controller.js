@@ -15,10 +15,16 @@ module.exports.home = (req, res) => {
         })
         .exec((err, posts) => {
             if(err) {
-                console.log('error is fetching posts')
-                return
+                console.log('error in fetching posts')
+                return res.redirect('back')
             }
             console.log('posts fetched  successfully')
-            return res.render('home.ejs', {title: 'Home', posts})
+            User.find({}, (err, users) => {
+                if(err) {
+                    console.log('error in getting users')
+                    return res.redirect('back')
+                }
+                return res.render('home.ejs', {title: 'Home', posts, allUsers: users})
+            })
         })
 }
