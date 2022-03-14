@@ -22,8 +22,10 @@ module.exports.create = async (req, res) => {
             user: req.user._id
         })
         console.log('created post')
+        req.flash('success', 'post created successfully')
         return res.redirect('back')
     } catch(err) {
+        req.flash('error', 'error in creating post')
         console.log('error in creating post')
     }
 }
@@ -60,6 +62,7 @@ module.exports.destroy = async (req, res) => {
             console.log('post deleted')
             await Comment.deleteMany({post: id})
             console.log('comment associated with post also deleted')
+            req.flash('success', 'post deleted successfully')
             return res.redirect('back')
         } else {
             console.log('post not found or user id does not match')
@@ -67,6 +70,7 @@ module.exports.destroy = async (req, res) => {
         }
     } catch(err) {
         console.log('error in deleting post ', err)
+        req.flash('error', 'error in deleting post')
         return res.redirect('back')
     }
 }
