@@ -1,7 +1,7 @@
 const Post = require('../models/post')
 const User = require('../models/user')
 
-module.exports.home = (req, res) => {
+/*module.exports.home = (req, res) => {
     Post.find({})
         //prepoluting posts with users document to display name of the user on post who created it
         .populate('user')  //this user referes to user property in postSchema
@@ -27,4 +27,22 @@ module.exports.home = (req, res) => {
                 return res.render('home.ejs', {title: 'Home', posts, allUsers: users})
             })
         })
+    }*/
+    
+module.exports.home = async (req, res,) => {
+    try {
+        const posts = await Post.find({})
+            .populate('user')
+            .populate({
+                path: 'comments',
+                populate: {
+                    path: 'user'
+                }
+            })
+        const users = await User.find({})
+        return res.render('home.ejs', {title: 'Home', posts, allUsers: users})
+    } catch(err) {
+        console.log('error in fetching posts and users ', err)
+        return res.render('home.ejs', {title: 'Home', posts: [], allUsers: []})
+    }
 }
