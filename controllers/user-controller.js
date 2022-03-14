@@ -1,7 +1,6 @@
 const User = require('../models/user')
 const passport = require('passport')
 
-
 //render profile page
 module.exports.profile = (req, res) => {
     //getting id from params, finding the user and passing it to locals
@@ -70,12 +69,16 @@ module.exports.create = (req, res) => {
 //get sign in form data and create session for the user
 module.exports.createSession = (req, res) => {
     console.log('session created, redirecting to home')
+    //connect-flash has added flash() in req
+    req.flash('success', 'Signed in successfully')
+    //console.log(`req.flash('success') = `, req.flash('success'))  //[ 'Signed in successfully' ]
     return res.redirect('/')
 }
 
 //get sign out
 module.exports.destroySession = (req, res) => {
     console.log('session destroyed, redirecting to home')
+    req.flash('success', 'Signed out successfully')
     //passport has added logout() in req
     req.logout()
     return res.redirect('/')

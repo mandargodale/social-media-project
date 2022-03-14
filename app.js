@@ -11,6 +11,8 @@ const passportLocal = require('./config/passport-local-strategy')
 //to avoid this problem, we can use connect-mongo package
 const MongoStore = require('connect-mongo')
 const sassMiddleware = require('node-sass-middleware')
+const flash = require('connect-flash')
+const cutomeMiddleware = require('./config/middleware')
 
 const mongoUrl = 'mongodb+srv://mandartodoappuser:mandartodoapppass@todoapp.jz7vz.mongodb.net/smpDB?retryWrites=true&w=majority'
 
@@ -68,6 +70,11 @@ app.use(passport.initialize())
 app.use(passport.session())
 //this middleware will be called for every route, it will set req.uesr to res.locals.user
 app.use(passport.setAuthenticatedUser)
+
+//for flash messages
+//use this after session is created to store flash messages in session cookies
+app.use(flash())
+app.use(cutomeMiddleware.setFlash)
 
 //set up the router
 app.use('/', router)

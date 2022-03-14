@@ -10,9 +10,12 @@
         <%- style %>
     </head>
     <body>
-        
         <%# _header.ejs will be inserted here %>
         <%- include('_header'); -%>
+
+        <% if(flash.success && flash.success.length > 0) { %>
+            <h5><%= flash.success %></h5>
+        <% } %>
         
         <%# variable part will be inserted here %>
         <%# body is inbuilt variable %>
