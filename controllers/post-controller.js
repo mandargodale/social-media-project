@@ -77,7 +77,7 @@ module.exports.create = async (req, res) => {
     })
 } */
 
-module.exports.destroy = async (req, res) => {
+/* module.exports.destroy = async (req, res) => {
     try {
         const {id} = req.params
         const post = await Post.findById(id)
@@ -88,6 +88,33 @@ module.exports.destroy = async (req, res) => {
             console.log('comment associated with post also deleted')
             req.flash('success', 'post deleted successfully')
             return res.redirect('back')
+        } else {
+            console.log('post not found or user id does not match')
+            return res.redirect('back')
+        }
+    } catch(err) {
+        console.log('error in deleting post ', err)
+        req.flash('error', 'error in deleting post')
+        return res.redirect('back')
+    }
+} */
+
+module.exports.destroy = async (req, res) => {
+    try {
+        const {id} = req.params
+        const post = await Post.findById(id)
+        if(post && post.user.toString() === req.user.id) {
+            post.remove()
+            console.log('post deleted')
+            await Comment.deleteMany({post: id})
+            if(req.xhr) {
+                console.log('comment associated with post also deleted')
+                req.flash('success', 'post deleted successfully')
+                return res.status(200).json({
+                    data: {post_id: id},
+                    message: 'comment associated with post also deleted'
+                })
+            }
         } else {
             console.log('post not found or user id does not match')
             return res.redirect('back')

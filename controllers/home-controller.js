@@ -32,6 +32,7 @@ const User = require('../models/user')
 module.exports.home = async (req, res,) => {
     try {
         const posts = await Post.find({})
+            .sort('-createdAt')  //to display recent posts first
             .populate('user')
             .populate({
                 path: 'comments',

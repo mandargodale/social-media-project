@@ -1,10 +1,9 @@
-//method to submit form data to post-controller.js create() for creating new post
+//function to submit form data to post-controller.js create() for creating new post
 const createPost = () => {
     console.log('Inside createPost()')
     const createPostForm = $('#create-post-form')
     createPostForm.submit((e) => {
         e.preventDefault()
-        console.log('createPostForm.serialize() = ', createPostForm.serialize())
         $.ajax({
             type: 'post',
             url: '/post/create',
@@ -12,15 +11,16 @@ const createPost = () => {
             success: (data) => {
                 const createdPost = appendPost(data.data.post)
                 $('#post-list-container>ul').prepend(createdPost)
+                deletePost($(' .delete-post-button', createdPost))
             },
             error: (error) => {
-                console.log(error.responseText)
+                console.log('error in creating post = ', error.responseText)
             }
         })
     })
 }
 
-//method to append the created post to DOM
+//function to append the created post to DOM
 const appendPost = (post) => {
     return $(`
     <li id="post-${post._id}">
@@ -46,6 +46,24 @@ const appendPost = (post) => {
             </div>
         </div>
     </li>`)
+}
+
+//function to delete a post from DOM
+const deletePost = (deleteLink) => {  //deleteLink is the <a> tag
+    console.log('Inside deletePost()')
+    $(deleteLink).click((e) => {
+        e.preventDefault()
+        $.ajax({
+            type: 'get',
+            url: $(deleteLink).prop('href'),  //getting value of href attribute from <a> tag
+            success: (data) => {
+                $(`#post-${data.data.post_id}`).remove()
+            },
+            error: (error) => {
+                console.log('error in deleting post = ', error.responseText)
+            }
+        })
+    })
 }
 
 createPost()
