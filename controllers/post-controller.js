@@ -15,7 +15,7 @@ const Comment = require('../models/comment')
     })
 } */
 
-module.exports.create = async (req, res) => {
+/* module.exports.create = async (req, res) => {
     try {
         await Post.create({
             content: req.body.content,
@@ -23,10 +23,34 @@ module.exports.create = async (req, res) => {
         })
         console.log('created post')
         req.flash('success', 'post created successfully')
-        return res.redirect('back')
+        return res.redirect('/')
     } catch(err) {
         req.flash('error', 'error in creating post')
         console.log('error in creating post')
+        return res.redirect('/')
+    }
+} */
+
+module.exports.create = async (req, res) => {
+    try {
+        const post = await Post.create({
+            content: req.body.content,
+            user: req.user._id
+        })
+        //AJAX request is of type XMLHttpRequest
+        //so if the req is from js/post.js/createPost(), req.xhr will be true
+        if(post && req.xhr) {
+            console.log('created post')
+            req.flash('success', 'post created successfully')
+            return res.status(200).json({
+                data: {post: post},
+                message: 'post created successfully'
+            })
+        }
+    } catch(err) {
+        req.flash('error', 'error in creating post')
+        console.log('error in creating post')
+        return res.redirect('/')
     }
 }
 
