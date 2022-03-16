@@ -12,7 +12,7 @@ const passportLocal = require('./config/passport-local-strategy')
 const MongoStore = require('connect-mongo')
 const sassMiddleware = require('node-sass-middleware')
 const flash = require('connect-flash')
-const cutomeMiddleware = require('./config/middleware')
+const customeMiddleware = require('./config/middleware')
 
 const mongoUrl = 'mongodb+srv://mandartodoappuser:mandartodoapppass@todoapp.jz7vz.mongodb.net/smpDB?retryWrites=true&w=majority'
 
@@ -74,7 +74,7 @@ app.use(passport.setAuthenticatedUser)
 //for flash messages
 //use this after session is created to store flash messages in session cookies
 app.use(flash())
-app.use(cutomeMiddleware.setFlash)
+app.use(customeMiddleware.setFlash)
 
 //set up the router
 app.use('/', router)

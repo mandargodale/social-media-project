@@ -1,6 +1,5 @@
 //function to submit form data to post-controller.js create() for creating new post
 const createPost = () => {
-    console.log('Inside createPost()')
     const createPostForm = $('#create-post-form')
     createPostForm.submit((e) => {
         e.preventDefault()

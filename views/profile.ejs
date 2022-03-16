@@ -4,9 +4,11 @@
 </h1>
 <!-- if user matches, show profile update form, else show profile info of selected user -->
 <% if(user.id === profileUser.id) { %>
-    <form action="/user/update-profile/<%= profileUser.id %>" method="post">
+    <!-- enctype="multipart/form-data => for file upload -->
+    <form action="/user/update-profile/<%= profileUser.id %>" method="post" enctype="multipart/form-data">
         <input type="text" name="name" placeholder="New name" value="<%= profileUser.name %>" required>
         <input type="email" name="email" placeholder="New email" value="<%= profileUser.email %>" required>
+        <input type="file" name="profilePicture" placeholder="Profile Picture">
         <button>Submit</button>
     </form>
 <% } else {%>
