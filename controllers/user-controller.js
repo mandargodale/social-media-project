@@ -1,6 +1,7 @@
 const User = require('../models/user')
 const passport = require('passport')
 const path = require('path')
+const fs = require('fs')
 
 //render profile page
 module.exports.profile = (req, res) => {
@@ -122,6 +123,10 @@ module.exports.update = async (req, res) => {
                 user.name = name
                 user.email = email
                 if(req.file) {
+                    //check if profilePicture is present and the file is present before deleting
+                    if(user.profilePicture && fs.existsSync(user.profilePicture)) {
+                        fs.unlinkSync(path.join(__dirname, '..', user.profilePicture))
+                    }
                     //User.profilePicturePath = uploads\user\profile-pictures, this is coming statics
                     //req.file.filename = profilePicture-number1-number2, this is from multer.diskStorage()
                     user.profilePicture = path.join(User.profilePicturePath, req.file.filename)
