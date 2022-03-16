@@ -13,6 +13,7 @@ const MongoStore = require('connect-mongo')
 const sassMiddleware = require('node-sass-middleware')
 const flash = require('connect-flash')
 const customeMiddleware = require('./config/middleware')
+const path = require('path')
 
 const mongoUrl = 'mongodb+srv://mandartodoappuser:mandartodoapppass@todoapp.jz7vz.mongodb.net/smpDB?retryWrites=true&w=majority'
 
@@ -39,6 +40,9 @@ app.use(sassMiddleware({
 //for serving static files
 //this should be done before layout is created since layout can be using css, js, images etc from public
 app.use(express.static('./public'))
+
+//to make files in uploads available to browser
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 //this needs to be called before routing since views at given route can be using the layout
 app.use(expressLayouts)

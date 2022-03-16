@@ -119,6 +119,8 @@ module.exports.update = async (req, res) => {
                     return res.redirect('back')
                 }
                 const {name, email} = req.body
+                user.name = name
+                user.email = email
                 if(req.file) {
                     //User.profilePicturePath = uploads\user\profile-pictures, this is coming statics
                     //req.file.filename = profilePicture-number1-number2, this is from multer.diskStorage()

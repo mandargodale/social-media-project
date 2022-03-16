@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const multer = require('multer')
 const path = require('path')
-const profilePicturePath = path.join('uploads', 'user', 'profile-pictures')
+//added \\ since we are requesting for profile picture using /upload/user...
+const profilePicturePath = path.join('\\', 'uploads', 'user', 'profile-pictures')
 
 const userSchema = new mongoose.Schema({
     name: {

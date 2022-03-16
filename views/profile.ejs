@@ -1,8 +1,6 @@
 <link rel="stylesheet" href="/css/profile.css">
-<h1>
-    profile.ejs
-</h1>
 <!-- if user matches, show profile update form, else show profile info of selected user -->
+<img src="<%= user.profilePicture %>" alt="<%= user.name %>" width="100px">
 <% if(user.id === profileUser.id) { %>
     <!-- enctype="multipart/form-data => for file upload -->
     <form action="/user/update-profile/<%= profileUser.id %>" method="post" enctype="multipart/form-data">
