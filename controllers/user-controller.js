@@ -1,5 +1,6 @@
 const User = require('../models/user')
 const passport = require('passport')
+const path = require('path')
 
 //render profile page
 module.exports.profile = (req, res) => {
@@ -84,7 +85,7 @@ module.exports.destroySession = (req, res) => {
     return res.redirect('/')
 }
 
-module.exports.update = (req, res) => {
+/* module.exports.update = (req, res) => {
     const {name, email} = req.body
     const {id} = req.params
     //checking if logged in user id and user id from params is matching
@@ -101,6 +102,39 @@ module.exports.update = (req, res) => {
         console.log('invalid user in update()')
         res.status(401).redirect('Unauthorized')
 
+    }
+    console.log(name, email, id)
+} */
+
+module.exports.update = async (req, res) => {
+    const {name, email} = req.body
+    const {id} = req.params
+    //checking if logged in user id and user id from params is matching
+    if(req.user.id === id) {
+        try {
+            const user = await User.findByIdAndUpdate(id)
+            User.uploadedProfilePicture(req, res, (err) => {
+                if(err) {
+                    console.log('multer error in updating profile ', err)
+                    return res.redirect('back')
+                }
+                const {name, email} = req.body
+                if(req.file) {
+                    //User.profilePicturePath = uploads\user\profile-pictures, this is coming statics
+                    //req.file.filename = profilePicture-number1-number2, this is from multer.diskStorage()
+                    user.profilePicture = path.join(User.profilePicturePath, req.file.filename)
+                }
+                user.save()
+                return res.redirect('back')
+            })
+        } catch(err) {
+            console.log('error in updating profile ', err)
+            req.flash('error', 'error in updating profile')
+            return res.redirect('back')
+        }
+    } else {
+        console.log('invalid user in update()')
+        res.status(401).redirect('Unauthorized')
     }
     console.log(name, email, id)
 }
