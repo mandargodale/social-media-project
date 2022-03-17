@@ -107,6 +107,7 @@ module.exports.destroy = async (req, res) => {
             post.remove()
             console.log('post deleted')
             await Comment.deleteMany({post: id})
+            console.log('comments on post also deleted')
             if(req.xhr) {
                 console.log('comment associated with post also deleted')
                 req.flash('success', 'post deleted successfully')
