@@ -3,6 +3,7 @@ const homeController = require('../controllers/home-controller')
 const userRouter = require('./user-router')
 const postRouter = require('./post-router')
 const commentRouter = require('./comment-router')
+const api = require('./api/api-router')
 
 const router = express.Router()
 
@@ -11,5 +12,7 @@ router.get('/', homeController.home)
 router.use('/user', userRouter)
 router.use('/post', postRouter)
 router.use('/comment', commentRouter)
+
+router.use('/api', api)
 
 module.exports = router
