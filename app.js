@@ -7,6 +7,7 @@ const connectToDb = require('./config/db-connection')
 const session = require('express-session')
 const passport = require('passport')
 const passportLocal = require('./config/passport-local-strategy')
+const passportJwt = require('./config/passport-jwt-strategy')
 //if we restart server, our cookie was getting expired even though maxAge time is not passed
 //to avoid this problem, we can use connect-mongo package to store session in db
 const MongoStore = require('connect-mongo')
