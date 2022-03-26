@@ -2,11 +2,16 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const User = require('../models/user')
 
-//telling password to use LocalStrategy for authentication
-passport.use(new LocalStrategy({
+//we want to find user by email id
+//passport uses value of name attribute in form to find the user
+//default value of name attribute in passport is username but we have email as value of name attribute
+//so setting usernameField to email to tell passport to use email instead of username
+const passportOptions = {
     usernameField: 'email',
     passReqToCallback: true
-}, (req, email, password, done) => {
+}
+
+const verifyCallback = (req, email, password, done) => {
     //find the user using email and establish the identity
     User.findOne({email: email}, (err, user) => {
         if(err) {
@@ -24,15 +29,25 @@ passport.use(new LocalStrategy({
             req.flash('error', 'incorrect username or password')
             return done(null, false)
         }
-        return done(null, user)
+        //if no error occured, user found and password matched, pass user to done()
+        return done(null, user)  //null => no error
     })
-}))
+}
 
+const localStrategy = new LocalStrategy(passportOptions, verifyCallback)
+
+//telling password to use localStrategy for authentication
+passport.use(localStrategy)
+
+//after verifyCallback(), passport call this
+//it receives user from verifyCallback(), using this it adds user id in the session cookie
 passport.serializeUser((user, done) => {
     console.log('Inside serializeUser()')
     return done(null, user.id)
 })
 
+//after serializeUser(), passport call this
+//it finds user by id and stores it in req.user
 passport.deserializeUser((id, done) => {
     console.log('Inside deserializeUser()')
     User.findById(id, (err, user) => {

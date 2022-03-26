@@ -8,7 +8,7 @@ const session = require('express-session')
 const passport = require('passport')
 const passportLocal = require('./config/passport-local-strategy')
 //if we restart server, our cookie was getting expired even though maxAge time is not passed
-//to avoid this problem, we can use connect-mongo package
+//to avoid this problem, we can use connect-mongo package to store session in db
 const MongoStore = require('connect-mongo')
 const sassMiddleware = require('node-sass-middleware')
 const flash = require('connect-flash')
@@ -71,6 +71,7 @@ app.use(session({
 }))
 
 app.use(passport.initialize())
+//it is used to create passport session in express session
 app.use(passport.session())
 //this middleware will be called for every route, it will set req.uesr to res.locals.user
 app.use(passport.setAuthenticatedUser)
