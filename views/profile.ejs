@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="/css/profile.css">
 <!-- if user matches, show profile update form, else show profile info of selected user -->
-<img src="<%= user.profilePicture %>" alt="<%= user.name %>" width="100px">
 <% if(user.id === profileUser.id) { %>
     <!-- enctype="multipart/form-data => for file upload -->
+    <img src="<%= user.profilePicture %>" alt="<%= user.name %>" width="100px">
     <form action="/user/update-profile/<%= profileUser.id %>" method="post" enctype="multipart/form-data">
         <input type="text" name="name" placeholder="New name" value="<%= profileUser.name %>" required>
         <input type="email" name="email" placeholder="New email" value="<%= profileUser.email %>" required>
@@ -10,6 +10,7 @@
         <button>Submit</button>
     </form>
 <% } else {%>
+    <img src="<%= profileUser.profilePicture %>" alt="<%= user.name %>" width="100px">
     <p><%= profileUser.name %></p>
     <p><%= profileUser.email %></p>
 <% } %>

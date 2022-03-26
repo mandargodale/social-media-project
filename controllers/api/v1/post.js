@@ -3,14 +3,14 @@ const Comment = require('../../../models/comment')
 
 module.exports.index = async (req, res) => {
     const posts = await Post.find({})
-    .sort('-createdAt')
-    .populate('user')
-    .populate({
-        path: 'comments',
-        populate: {
-            path: 'user'
-        }
-    })
+        .sort('-createdAt')
+        .populate('user')
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'user'
+            }
+        })
     return res.status(200).json({
         message: 'List of posts',
         posts: posts

@@ -12,6 +12,7 @@ const passportOptions = {
 }
 
 const verifyCallback = (req, email, password, done) => {
+    console.log('Inside verifyCallback()')
     //find the user using email and establish the identity
     User.findOne({email: email}, (err, user) => {
         if(err) {

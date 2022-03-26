@@ -1,9 +1,9 @@
 const express = require('express')
-const postApi = require('../../../controllers/api/v1/post-api')
+const post = require('../../../controllers/api/v1/post')
 
 const router = express.Router()
 
-router.get('/', postApi.index)
-router.delete('/:id', postApi.destroy)
+router.get('/posts', post.index)
+router.delete('/:id', post.destroy)
 
 module.exports = router
