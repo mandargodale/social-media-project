@@ -1,13 +1,11 @@
 const express = require('express')
 const router = require('./routes/router')
-const port = require('./config/server-config')
+const config = require('./config/config')
 const expressLayouts = require('express-ejs-layouts')
 const connectToDb = require('./config/db-connection')
 //const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const passport = require('passport')
-const passportLocal = require('./config/passport-local-strategy')
-const passportJwt = require('./config/passport-jwt-strategy')
 //if we restart server, our cookie was getting expired even though maxAge time is not passed
 //to avoid this problem, we can use connect-mongo package to store session in db
 const MongoStore = require('connect-mongo')
@@ -15,8 +13,9 @@ const sassMiddleware = require('node-sass-middleware')
 const flash = require('connect-flash')
 const customeMiddleware = require('./config/middleware')
 const path = require('path')
-
-const mongoUrl = 'mongodb+srv://mandartodoappuser:mandartodoapppass@todoapp.jz7vz.mongodb.net/smpDB?retryWrites=true&w=majority'
+require('./config/passport-local-strategy')
+require('./config/passport-jwt-strategy')
+require('dotenv').config()
 
 const app = express()
 
@@ -59,7 +58,7 @@ app.use(session({
         maxAge: 3600000  //60 minutes
     },
     //creating new MongoStore and assigning it to store key in session
-    store: MongoStore.create({ mongoUrl: mongoUrl, autoRemove: 'disabled' })
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL, autoRemove: 'disabled' })
 }))
 
 app.use(passport.initialize())
@@ -85,11 +84,10 @@ app.set('views', './views')
 //set up the router
 app.use('/', router)
 
-//app.listen(port, () => console.log(`Server running on port ${port}...`))
-
 const startServer = async () => {
+    const {port} = config
     try {
-        await connectToDb(mongoUrl)
+        await connectToDb(process.env.MONGO_URL)
         app.listen(port, () => console.log(`Connected to MongoDB and server is running on port ${port}`))
     } catch(err) {
         console.log(err)
