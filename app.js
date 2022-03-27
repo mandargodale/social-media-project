@@ -85,10 +85,10 @@ app.set('views', './views')
 app.use('/', router)
 
 const startServer = async () => {
-    const {port} = config
+    const {PORT} = process.env
     try {
         await connectToDb(process.env.MONGO_URL)
-        app.listen(port, () => console.log(`Connected to MongoDB and server is running on port ${port}`))
+        app.listen(PORT, () => console.log(`Connected to MongoDB and server is running on port ${PORT}`))
     } catch(err) {
         console.log(err)
     }
