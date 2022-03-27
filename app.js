@@ -17,6 +17,8 @@ require('./config/passport-local-strategy')
 require('./config/passport-jwt-strategy')
 require('dotenv').config()
 
+const {PORT, MONGO_URL} = process.env
+
 const app = express()
 
 //this will parse form data
@@ -58,7 +60,7 @@ app.use(session({
         maxAge: 3600000  //60 minutes
     },
     //creating new MongoStore and assigning it to store key in session
-    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL, autoRemove: 'disabled' })
+    store: MongoStore.create({ mongoUrl: MONGO_URL, autoRemove: 'disabled' })
 }))
 
 app.use(passport.initialize())
@@ -85,9 +87,8 @@ app.set('views', './views')
 app.use('/', router)
 
 const startServer = async () => {
-    const {PORT} = process.env
     try {
-        await connectToDb(process.env.MONGO_URL)
+        await connectToDb(MONGO_URL)
         app.listen(PORT, () => console.log(`Connected to MongoDB and server is running on port ${PORT}`))
     } catch(err) {
         console.log(err)
