@@ -3,6 +3,6 @@ const likeController = require('../controllers/like-controller')
 
 const router = express.Router()
 
-router.post('/toggle-like', likeController.toggleLike)
+router.get('/toggle-like', likeController.toggleLike)
 
 module.exports = router

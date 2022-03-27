@@ -38,8 +38,11 @@ module.exports.home = async (req, res,) => {
                 path: 'comments',
                 populate: {
                     path: 'user'
+                },
+                populate: {
+                    path: 'likes'
                 }
-            })
+            }).populate('likes')
         const users = await User.find({})
         return res.render('home.ejs', {title: 'Home', posts, allUsers: users})
     } catch(err) {

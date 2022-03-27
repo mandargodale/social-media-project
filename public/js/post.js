@@ -11,6 +11,8 @@ const createPost = () => {
                 const createdPost = appendPost(data.data.post)
                 $('#post-list-container>ul').prepend(createdPost)
                 deletePost($(' .delete-post-button', createdPost))
+
+                new ToggleLike($(' .toggle-like-button', createPost))
             },
             error: (error) => {
                 console.log('error in creating post = ', error.responseText)
@@ -31,6 +33,12 @@ const appendPost = (post) => {
             <br>
             <small>
             ${post.user.name}
+            </small>
+            <br>
+            <small>
+                <a class="toggle-like-button" data-likes="0" href="/likes/toggle-like/?id=${post._id}&type=Post">
+                    0 Likes
+                </a>
             </small>
         </p>
         <div id="post-comment">

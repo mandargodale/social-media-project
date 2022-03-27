@@ -27,6 +27,7 @@ module.exports.toggleLike  = async (req, res) => {
             likeable.save()
             existingLike.remove()
             deleted = true
+            return res.redirect('back')
         } else {
             const newLike = await Like.create({
                 user: userId,
@@ -35,12 +36,13 @@ module.exports.toggleLike  = async (req, res) => {
             })
             likeable.likes.push(newLike._id)
             likeable.save()
-            return res.status(200).json({
-                message: 'toggle like successfull',
-                data: {
-                    deleted: deleted
-                }
-            })
+            // return res.status(200).json({
+            //     message: 'toggle like successfull',
+            //     data: {
+            //         deleted: deleted
+            //     }
+            // })
+            return res.redirect('back')
         }
     } catch(err) {
         console.log('error in liking ', err)

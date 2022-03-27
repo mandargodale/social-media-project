@@ -1,4 +1,5 @@
 const Comment = require('../models/comment')
+const Like = require('../models/like')
 const Post = require('../models/post')
 
 module.exports.create = (req, res) => {
@@ -34,7 +35,7 @@ module.exports.create = (req, res) => {
 
 module.exports.destroy = (req, res) => {
     const {id} = req.params
-    Comment.findById(id, (err, comment) => {
+    Comment.findById(id, async (err, comment) => {
         if(err) {
             console.log('error in deleting comment')
             return res.redirect('back')
@@ -52,6 +53,7 @@ module.exports.destroy = (req, res) => {
                 console.log('successfully updated comments array in post while deleting comment')
                 return res.redirect('back')
             })
+            await Like.deleteMany({likeable: comment._id, onModel: 'Comment'})
         } else {
             console.log('comment user and logged in user does not match')
             return res.redirect('back')
