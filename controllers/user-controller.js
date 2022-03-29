@@ -2,14 +2,26 @@ const User = require('../models/user')
 const passport = require('passport')
 const path = require('path')
 const fs = require('fs')
+const Post = require('../models/post')
 
 //render profile page
-module.exports.profile = (req, res) => {
+module.exports.profile = async (req, res) => {
     //getting id from params, finding the user and passing it to locals
     const {id} = req.params
-    User.findById(id, (err, user) => {
-        return res.render('profile.ejs', {title: 'Profile', profileUser: user})
-    })
+    const user = await User.findById(id)
+    const posts = await Post.find({user: id})
+            .sort('-createdAt')  //to display recent posts first
+            .populate('user')
+            .populate({
+                path: 'comments',
+                populate: {
+                    path: 'user'
+                },
+                populate: {
+                    path: 'likes'
+                }
+            }).populate('likes')
+    return res.render('profile.ejs', {title: 'Profile', posts, profileUser: user})
 }
 
 //render sign up page

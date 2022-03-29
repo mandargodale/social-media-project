@@ -31,13 +31,13 @@ app.use(express.urlencoded({extended: false}))
 
 //currently our scss converts into css for every request and then the css is sent to browser
 //this should be optimized to convert all scss into css at once and then send it to browser
-app.use(sassMiddleware({
-    src: './public/scss',
-    dest: './public/css',
-    //debug: true,
-    outputStyle: 'expanded',
-    prefix: '/css'
-}))
+// app.use(sassMiddleware({
+//     src: './public/scss',
+//     dest: './public/css',
+//     //debug: true,
+//     outputStyle: 'expanded',
+//     prefix: '/css'
+// }))
 
 //for serving static files
 //this should be done before layout is created since layout can be using css, js, images etc from public
