@@ -6,7 +6,7 @@
         <% if(locals.user) { %>
             <form action="/post/create" id="create-post-form" method="post">
                 <textarea name="content" id="post-content" cols="30" rows="3" placeholder="Type here..." required></textarea>
-                <button>Post</button>
+                <button class="btn btn-primary" style="margin-bottom: 25px;">Post</button>
             </form>
         <% } %>
         <div id="post-list-container">
