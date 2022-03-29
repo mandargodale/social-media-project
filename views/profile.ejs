@@ -8,6 +8,13 @@
         <input type="email" name="email" placeholder="New email" value="<%= profileUser.email %>" required>
         <input type="file" name="profilePicture" placeholder="Profile Picture">
         <button>Submit</button>
+        <div id="post-list-container">
+            <ul>
+                <% for(post of posts) { %>
+                    <%- include('_post') %>
+                <% } %>
+            </ul>
+        </div>
     </form>
 <% } else {%>
     <img src="<%= profileUser.profilePicture %>" alt="<%= user.name %>" width="100px">
