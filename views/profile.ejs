@@ -20,4 +20,11 @@
     <img src="<%= profileUser.profilePicture %>" alt="<%= user.name %>" width="100px">
     <p><%= profileUser.name %></p>
     <p><%= profileUser.email %></p>
+    <div id="post-list-container">
+        <ul>
+            <% for(post of posts) { %>
+                <%- include('_post') %>
+            <% } %>
+        </ul>
+    </div>
 <% } %>
