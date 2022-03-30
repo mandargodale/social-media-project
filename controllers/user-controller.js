@@ -14,12 +14,10 @@ module.exports.profile = async (req, res) => {
             .populate('user')
             .populate({
                 path: 'comments',
-                populate: {
-                    path: 'user'
-                },
-                populate: {
-                    path: 'likes'
-                }
+                populate: [
+                    {path: 'user'},
+                    {path: 'likes'}
+                ]
             }).populate('likes')
     return res.render('profile.ejs', {title: 'Profile', posts, profileUser: user})
 }
