@@ -1,4 +1,5 @@
-<li>
+<link rel="stylesheet" href="/css/comment.css">
+<li class="comment-li">
     <p>
         <%= comment.content %>
         <% if(locals.user && locals.user.id === comment.user._id.toString()) { %>

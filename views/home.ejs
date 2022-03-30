@@ -1,7 +1,6 @@
 <link rel="stylesheet" href="/css/home.css">
 <div id="home-container">
     <section id="feed-posts">
-        <h2>Posts</h2>
         <!-- displaying post form only if user is logged in -->
         <% if(locals.user) { %>
             <form action="/post/create" id="create-post-form" method="post">
@@ -10,6 +9,7 @@
             </form>
         <% } %>
         <div id="post-list-container">
+            <h2 style="margin-left: 30px;">Posts</h2>
             <ul>
                 <% for(post of posts) { %>
                     <%- include('_post') %>
@@ -19,7 +19,7 @@
         <button onclick="loadMorePosts()">Load</button>
     </section>
     <section id="user-friends">
-        <h2>Friends</h2>
+        <h2>People</h2>
         <% for(user of allUsers) { %>
             <p>
                 <a href="/user/profile/<%= user.id %>"><%= user.name %></a>
