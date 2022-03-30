@@ -42,12 +42,10 @@ module.exports.home = async (req, res,) => {
             .populate('user')
             .populate({
                 path: 'comments',
-                populate: {
-                    path: 'user'
-                },
-                populate: {
-                    path: 'likes'
-                }
+                populate: [
+                    {path: 'user'},
+                    {path: 'likes'}
+                ]
             }).populate('likes')
         const users = await User.find({})
         return res.render('home.ejs', {title: 'Home', posts, allUsers: users})
