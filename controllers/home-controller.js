@@ -1,5 +1,6 @@
 const Post = require('../models/post')
 const User = require('../models/user')
+const config = require('../config/config')
 
 /*module.exports.home = (req, res) => {
     Post.find({})
@@ -29,9 +30,14 @@ const User = require('../models/user')
         })
     }*/
     
+let postLimit = config.defaultPostLimit
 module.exports.home = async (req, res,) => {
+    //if request is from load button, then only load more posts
+    if(req.xhr) {
+        postLimit += config.noOfPostsToLoad
+    }
     try {
-        const posts = await Post.find({})
+        const posts = await Post.find({}).limit(postLimit)
             .sort('-createdAt')  //to display recent posts first
             .populate('user')
             .populate({
