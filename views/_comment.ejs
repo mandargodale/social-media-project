@@ -1,10 +1,10 @@
 <link rel="stylesheet" href="/css/comment.css">
-<li class="comment-li">
+<li class="comment-list">
     <p>
         <%= comment.content %>
         <% if(locals.user && locals.user.id === comment.user._id.toString()) { %>
             <small style="padding-left: 5;">
-                <a href="/comment/destroy/<%= comment.id %>">
+                <a href="/comment/destroy/<%= comment.id %>" style="text-decoration: none;">
                     <svg style="color: red;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                         <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -12,15 +12,31 @@
                 </a>
             </small>
         <%}%>
+        <img class="comment-image" src="<%= comment.user.profilePicture %>" alt="<%= comment.user.name %>" style="margin-top: 3px;">
+        <span class="comment-username">
+            <small>
+                <%= comment.user.name %>
+            </small>
+        </span>
         <br>
         <small>
-            <%= comment.user.name %>
-        </small>
-        <small>
             <% if(locals.user) { %>
-                <a class="toggle-like-button" data-likes="<%= comment.likes.length %>" href="/like/toggle-like/?id=<%= comment._id%>&type=Comment">
-                    <%= comment.likes.length %> Likes
-                </a>
+                <span style="color: white; background-color: navy; margin-right: 5px;">
+                    <%= comment.likes.length %>
+                </span>
+                <% if(comment.likes.find(x => x.user.toString() == locals.user.id)) { %>
+                    <button>
+                        <a class="toggle-like-button" data-likes="<%= comment.likes.length %>" href="/like/toggle-like/?id=<%= comment._id%>&type=Comment">
+                            Unlike
+                        </a>
+                    </button>
+                <% } else { %>
+                    <button>
+                        <a class="toggle-like-button" data-likes="<%= comment.likes.length %>" href="/like/toggle-like/?id=<%= comment._id%>&type=Comment">
+                            Like
+                        </a>
+                    </button>
+                <% } %>
             <% } else { %>
                 <%= comment.likes.length %> Likes
             <% } %>

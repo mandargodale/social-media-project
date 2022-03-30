@@ -1,3 +1,18 @@
-.comment-li {
+.comment-list {
     list-style-type: none;
+    background-color: #808b96;
+}
+
+.comment-username {
+    color: white;
+    background-color: black;
+    border: solid 1px black;
+    border-radius: 8px;
+}
+
+.comment-image {
+    height: 35px;
+    margin-right: 5px;
+    width: 35px;
+    border-radius: 100%;
 }
