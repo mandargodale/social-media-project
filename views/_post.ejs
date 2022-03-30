@@ -14,19 +14,21 @@
                         </a>
                     </small>
                 <% } %>
-            </div>
-            <br>
-            <img class="post-image" src="<%= post.user.profilePicture %>" alt="<%= post.user.name %>" width="75px" height="50px">
-            <span class="post-username">
-                <small>
-                    <%= post.user.name %>
-                </small>
-            </span>
         </div>
+        <br>
+        <img class="post-image" src="<%= post.user.profilePicture %>" alt="<%= post.user.name %>" width="75px" height="50px">
+        <span class="post-username">
+            <small>
+                <%= post.user.name %>
+            </small>
+        </span>
+        <br>
         <br>
         <small>
             <% if(locals.user) { %>
-                <%= post.likes.length %>
+                <span style="color: white; background-color: navy; margin-right: 5px;">
+                    <%= post.likes.length %>
+                </span>
                 <% if(post.likes.find(x => x.user.toString() == locals.user.id)) { %>
                     <button>
                         <a class="toggle-like-button" data-likes="<%= post.likes.length %>" href="/like/toggle-like/?id=<%= post._id%>&type=Post">
@@ -44,6 +46,8 @@
                 <%= post.likes.length %> Likes
             <% } %>
         </small>
+        </div>
+        <br>
     </p>
     <div id="post-comment">
         <% if(locals.user) { %>

@@ -3,7 +3,7 @@
     background-color: #d5d8dc;
     margin-bottom: 5px;
     border: solid black 1px;
-    list-style-type: none
+    list-style-type: none;
 }
 
 .post-username {
@@ -21,7 +21,7 @@
 }
 
 .post-data {
-    background-color: darkgray;
+    background-color: #abb2b9;
 }
 
 .post-content {
