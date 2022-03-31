@@ -12,12 +12,14 @@
                 </a>
             </small>
         <%}%>
-        <img class="comment-image" src="<%= comment.user.profilePicture %>" alt="<%= comment.user.name %>" style="margin-top: 3px;">
-        <span class="comment-username">
-            <small>
-                <%= comment.user.name %>
-            </small>
-        </span>
+        <a href="/user/profile/<%= comment.user.id %>" style="text-decoration: none;">
+            <img class="comment-image" src="<%= comment.user.profilePicture %>" alt="<%= comment.user.name %>" style="margin-top: 3px;">
+            <span class="comment-username">
+                <small>
+                    <%= comment.user.name %>
+                </small>
+            </span>
+        </a>
         <br>
         <small>
             <% if(locals.user) { %>

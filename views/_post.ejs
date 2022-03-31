@@ -16,12 +16,14 @@
                 <% } %>
         </div>
         <br>
-        <img class="post-image" src="<%= post.user.profilePicture %>" alt="<%= post.user.name %>" width="75px" height="50px">
-        <span class="post-username">
-            <small>
-                <%= post.user.name %>
-            </small>
-        </span>
+        <a href="/user/profile/<%= post.user.id %>" style="text-decoration: none;">
+            <img class="post-image" src="<%= post.user.profilePicture %>" alt="<%= post.user.name %>" width="75px" height="50px">
+            <span class="post-username">
+                <small>
+                    <%= post.user.name %>
+                </small>
+            </span>
+        </a>
         <br>
         <br>
         <small>
@@ -47,7 +49,6 @@
             <% } %>
         </small>
         </div>
-        <br>
     </p>
     <div id="post-comment">
         <% if(locals.user) { %>
