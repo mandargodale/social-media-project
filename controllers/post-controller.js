@@ -23,6 +23,10 @@ module.exports.destroy = async (req, res) => {
         const {id} = req.params
         const post = await Post.findById(id)
         if(post && post.user.toString() === req.user.id) {
+
+            await Like.deleteMany({likeable: post, onModel: 'Post'})
+            await Like.deleteMany({likeable: {$in: post.comments}})
+
             post.remove()
             console.log('post deleted')
             await Comment.deleteMany({post: id})
