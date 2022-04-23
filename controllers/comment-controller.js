@@ -41,6 +41,8 @@ module.exports.destroy = (req, res) => {
             return res.redirect('back')
         }
         if(comment && comment.user.toString() === req.user.id) {
+            await Like.deleteMany({likeable: comment._id, onModel: 'Comment'})
+            console.log('likes on comment deleted successfully')
             const postId = comment.post  //before deleting comment, take out postId to which comment is associated
             comment.remove()
             console.log('comment deleted successfully')
@@ -53,7 +55,6 @@ module.exports.destroy = (req, res) => {
                 console.log('successfully updated comments array in post while deleting comment')
                 return res.redirect('back')
             })
-            await Like.deleteMany({likeable: comment._id, onModel: 'Comment'})
         } else {
             console.log('comment user and logged in user does not match')
             return res.redirect('back')
