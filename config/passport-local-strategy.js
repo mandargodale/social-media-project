@@ -31,6 +31,7 @@ const verifyCallback = (req, email, password, done) => {
             return done(null, false)
         }
         //if no error occured, user found and password matched, pass user to done()
+        console.log('user found successfully')
         return done(null, user)  //null => no error
     })
 }

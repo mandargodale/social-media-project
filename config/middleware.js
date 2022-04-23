@@ -1,3 +1,4 @@
+//this is our custom middleware
 //this middleware is called from app.js on all router
 //it will create flash object in locals
 module.exports.setFlash = (req, res, next) => {
@@ -7,3 +8,4 @@ module.exports.setFlash = (req, res, next) => {
     }
     next()
 }
+ 

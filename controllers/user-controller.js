@@ -79,10 +79,19 @@ module.exports.create = (req, res) => {
 }
 
 //get sign in form data and create session for the user
+//if user is found successfully from passport-local-strategy.js, we will redirect to /
 module.exports.createSession = (req, res) => {
     console.log('session created, redirecting to home')
     //connect-flash has added flash() in req
+    //success => this will be shown in if(flash.success && flash.success.length > 0){ flash.success }
+    //value of flash.success will be set to Signed in successfully
     req.flash('success', 'Signed in successfully')
+
+    //HERE, WE ARE ADDING MESSSAGES TO REQUEST
+    //USING THIS, WE CAN ACCESS THESE MESSAGES USING locals
+    //req.flash('success') and req.flash('error') from middleware.js WILL SET THESE MESSAGES IN RESPONSE
+    //TRY COMMENTING req.flash('success'), Signed in successfully WILL NOT BE DISPLAYED
+
     //console.log(`req.flash('success') = `, req.flash('success'))  //[ 'Signed in successfully' ]
     return res.redirect('/')
 }

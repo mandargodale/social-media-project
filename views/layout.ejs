@@ -29,26 +29,19 @@
         
         <%- script %>
 
-        <script>
-            if('<%= flash.success %>' && '<%= flash.success.length > 0 %>') {
-                new Noty({
-                    theme: 'relax',
-                    text: '<%= flash.success %>',
-                    type: 'success',
-                    layout: 'topRight',
-                    timeout: 1500
-                }).show()
-            }
-            if('<%= flash.error %>' && '<%= flash.error.length > 0 %>') {
-                new Noty({
-                    theme: 'relax',
-                    text: '<%= flash.error %>',
-                    type: 'error',
-                    layout: 'topRight',
-                    timeout: 1500
-                }).show()
-            }
-        </script>
+        <%# flash is added to locals in middleware.js %>
+        <% if(flash.success && flash.success.length > 0) { %>
+            <h5>
+                <%# e.g. if sign in is successfull, this will be displayed %>
+                <%= flash.success %>
+            </h5>
+        <% } %>
+        <% if(flash.error && flash.error.length > 0) { %>
+            <h5>
+                <%# e.g. if error in sign, this will be displayed %>
+                <%= flash.error %>
+            </h5>
+        <% } %>
 
     </body>
 </html>
