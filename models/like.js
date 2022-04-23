@@ -4,16 +4,17 @@ const schema = {
     user: {
         type: mongoose.Schema.ObjectId,
     },
+    //object which is liked
     likeable: {
         type: mongoose.Schema.ObjectId,
         required: true,
-        refPath: 'onModel'
+        refPath: 'onModel'  //dynamic reference
     },
     onModel: {
         type: String,
         required: true,
         enum: [
-            'Post', 'Comment'
+            'Post', 'Comment'  //object can be post or comment
         ]
     }
 }

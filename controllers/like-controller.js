@@ -4,18 +4,18 @@ const Comment = require('../models/comment')
 
 module.exports.toggleLike  = async (req, res) => {
     try {
-        let likeable
-        let deleted = false
+        let unlike = false
         const {id, type} = req.query
         const userId = req.user._id
-        if(type.toLowerCase() === 'post') {
-            likeable = await Post.findById(id).populate('likes')
-        } else {
-            likeable = await Comment.findById(id).populate('likes')
-        }
-        // likeable = type.toLowerCase() === 'post'
-        // ? await Post.findById(id).populate('likes')
-        // : await Comment.findById(id).populate('likes')
+        // if(type.toLowerCase() === 'post') {
+        //     likeable = await Post.findById(id).populate('likes')
+        // } else {
+        //     likeable = await Comment.findById(id).populate('likes')
+        // }
+        
+        let likeable = type.toLowerCase() === 'post'
+            ? await Post.findById(id).populate('likes')
+            : await Comment.findById(id).populate('likes')
 
         let existingLike = await Like.findOne({
             likeable: id,
@@ -26,9 +26,9 @@ module.exports.toggleLike  = async (req, res) => {
             likeable.likes.pull(existingLike._id)
             likeable.save()
             existingLike.remove()
-            deleted = true
+            unlike = true  //if like exists, unlike it
             return res.redirect('back')
-        } else {
+        } else {  //else like it
             const newLike = await Like.create({
                 user: userId,
                 likeable: id,
@@ -36,16 +36,10 @@ module.exports.toggleLike  = async (req, res) => {
             })
             likeable.likes.push(newLike._id)
             likeable.save()
-            // return res.status(200).json({
-            //     message: 'toggle like successfull',
-            //     data: {
-            //         deleted: deleted
-            //     }
-            // })
-            return res.redirect('back')
         }
+        return res.redirect('back')
     } catch(err) {
         console.log('error in liking ', err)
-        return res.status(500).json({message: 'error in liking'})
+        return res.redirect('back')
     }
 }
